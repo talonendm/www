@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>Chronological Diagram of Asia</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+		<style type="text/css">
+		.chart {
+			shape-rendering: crispEdges;
+		}
+
+		.mini text {
+			font: 9px sans-serif;	
+		}
+
+		.main text {
+			font: 12px sans-serif;	
+		}
+
+		.miniItem0 {
+			fill: darksalmon;
+			stroke-width: 6;	
+		}
+
+		.miniItem1 {
+			fill: darkolivegreen;
+			fill-opacity: .7;
+			stroke-width: 6;	
+		}
+
+		.miniItem2 {
+			fill: slategray;
+			fill-opacity: .7;
+			stroke-width: 6;	
+		}
+
+		.brush .extent {
+			stroke: gray;
+			fill: dodgerblue;
+			fill-opacity: .365;
+		}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+		//data
+		var lanes = ["Kari","Jussi","joku muu"],
+			laneLength = lanes.length,
+			items = [
+	{lane: 1, "id": "Motti","start":20,"end":39.5},
+{lane: 2, "id": "Kynsilaukka","start":40,"end":59.5},
+{lane: 0, "id": "Gastone","start":60,"end":79.5},
+{lane: 0, "id": "Villetta","start":80,"end":99.5},
+{lane: 0, "id": "Len's Keishoku & Bar","start":100,"end":119.5},
+{lane: 0, "id": "Sea Horse","start":120,"end":139.5},
+{lane: 0, "id": "Messenius","start":140,"end":159.5},
+{lane: 2, "id": "13.5.2002","start":120,"end":139.5},
+{lane: 2, "id": "27.5.2002","start":140,"end":159.5},
+{lane: 1, "id": "Hariton","start":160,"end":179.5},
+{lane: 2, "id": "G18","start":180,"end":199.5},
+{lane: 0, "id": "Suomi Lautasella","start":200,"end":219.5},
+{lane: 0, "id": "Graniittilinna","start":220,"end":239.5},
+{lane: 0, "id": "Rodolfo","start":240,"end":259.5},
+{lane: 0, "id": "Kuu","start":260,"end":279.5},
+{lane: 0, "id": "La Bodega","start":280,"end":299.5},
+{lane: 0, "id": "Bar Teos","start":300,"end":319.5},
+{lane: 1, "id": "Cella","start":320,"end":339.5},
+{lane: 2, "id": "Kuurna","start":340,"end":359.5},
+{lane: 0, "id": "Weeruska","start":360,"end":379.5},
+{lane: 0, "id": "Casaro","start":380,"end":399.5},
+{lane: 0, "id": "BBQ House","start":400,"end":419.5},
+{lane: 0, "id": "Zinnkeller","start":420,"end":439.5},
+{lane: 2, "id": "Farouge","start":440,"end":459.5},
+{lane: 0, "id": "Pannonia","start":460,"end":479.5},
+{lane: 0, "id": "Korea House","start":480,"end":499.5},
+{lane: 1, "id": "Basilica","start":500,"end":519.5},
+{lane: 0, "id": "Juuri","start":520,"end":539.5},
+{lane: 0, "id": "Persilja","start":540,"end":559.5},
+{lane: 0, "id": "Villa Thai","start":560,"end":579.5},
+{lane: 1, "id": "kosmos","start":580,"end":599.5},
+{lane: 2, "id": "teatteri","start":600,"end":619.5},
+{lane: 0, "id": "kabuki","start":620,"end":639.5},
+{lane: 0, "id": "maxill","start":640,"end":659.5},
+{lane: 0, "id": "mestaritalli","start":660,"end":679.5},
+{lane: 0, "id": "elite","start":680,"end":699.5},
+{lane: 0, "id": "ateljee","start":700,"end":719.5},
+{lane: 0, "id": "jailbird","start":720,"end":739.5},
+{lane: 1, "id": "safka","start":740,"end":759.5},
+{lane: 2, "id": "grotesk","start":760,"end":779.5},
+{lane: 0, "id": "Benjam's bistro","start":780,"end":799.5},
+{lane: 0, "id": "Rymy eetu","start":800,"end":819.5},
+{lane: 0, "id": "Karl Johan","start":820,"end":839.5},
+{lane: 0, "id": "Kellarikrouvi","start":840,"end":859.5},
+{lane: 0, "id": "La Societe Du Cochon","start":860,"end":879.5},
+{lane: 2, "id": "Helmi","start":880,"end":899.5},
+{lane: 1, "id": "Coma","start":900,"end":919.5},
+{lane: 0, "id": "Macu","start":920,"end":939.5},
+{lane: 0, "id": "Konstan möljä","start":940,"end":959.5},
+{lane: 0, "id": "Trenta","start":960,"end":979.5},
+{lane: 0, "id": "Holvari","start":980,"end":999.5},
+{lane: 2, "id": "del mar","start":1000,"end":1019.5},
+{lane: 1, "id": "Raku ya","start":1020,"end":1039.5},
+{lane: 0, "id": "Troikka","start":1040,"end":1059.5},
+{lane: 0, "id": "Storyville","start":1060,"end":1079.5},
+{lane: 0, "id": "Kilim","start":1080,"end":1099.5},
+{lane: 0, "id": "Elviira","start":1100,"end":1119.5},
+{lane: 0, "id": "Parilla espanola","start":1120,"end":1139.5},
+{lane: 0, "id": "Azoros","start":1140,"end":1159.5},
+{lane: 0, "id": "Virgin oil co","start":1160,"end":1179.5},
+{lane: 2, "id": "Fishmarket","start":1180,"end":1199.5},
+{lane: 1, "id": "Mecca","start":1200,"end":1219.5},
+{lane: 0, "id": "La Medina","start":1220,"end":1239.5},
+{lane: 0, "id": "Pirate","start":1240,"end":1259.5},
+{lane: 0, "id": "Brunos","start":1260,"end":1279.5},
+{lane: 2, "id": "Aito","start":1280,"end":1299.5},
+{lane: 0, "id": "Töölönranta","start":1300,"end":1319.5},
+{lane: 0, "id": "Luomo","start":1320,"end":1339.5},
+{lane: 1, "id": "Farang","start":1340,"end":1359.5},
+{lane: 0, "id": "Bistro Helsinki 15","start":1360,"end":1379.5},
+{lane: 0, "id": "Strindberg","start":1380,"end":1399.5},
+{lane: 0, "id": "Vaelsa","start":1400,"end":1419.5},
+{lane: 0, "id": "Lasipalatsi","start":1420,"end":1439.5},
+{lane: 0, "id": "Grilli it","start":1440,"end":1459.5},
+{lane: 1, "id": "Martta","start":1460,"end":1479.5},
+{lane: 0, "id": "Carelia","start":1480,"end":1499.5},
+{lane: 0, "id": "Olive's","start":1500,"end":1519.5},
+{lane: 2, "id": "Solna","start":1520,"end":1539.5},
+{lane: 0, "id": "Bistro Leon","start":1540,"end":1559.5},
+{lane: 1, "id": "Ravintola Savu","start":1560,"end":1579.5},
+{lane: 2, "id": "Tokyo 55","start":1580,"end":1599.5},
+{lane: 0, "id": "Mange sud","start":1600,"end":1619.5},
+{lane: 0, "id": "Zio Pepe","start":1620,"end":1639.5},
+{lane: 0, "id": "Tang dynasty","start":1640,"end":1659.5},
+{lane: 0, "id": "la table","start":1660,"end":1679.5},
+{lane: 0, "id": "Backfickan","start":1680,"end":1699.5},
+{lane: 0, "id": "Aleksandria","start":1700,"end":1719.5},
+{lane: 0, "id": "Stone's","start":1720,"end":1739.5},
+{lane: 0, "id": "Eeron keittiö","start":1740,"end":1759.5},
+{lane: 2, "id": "Goce","start":1760,"end":1779.5},
+{lane: 1, "id": "Kolme kruunua","start":1780,"end":1799.5},
+{lane: 0, "id": "Perho","start":1800,"end":1819.5},
+{lane: 0, "id": "Umeshu","start":1820,"end":1839.5},
+{lane: 0, "id": "König","start":1840,"end":1859.5},
+{lane: 0, "id": "Johannes","start":1860,"end":1879.5},
+{lane: 0, "id": "Lupolo","start":1880,"end":1899.5},
+{lane: 2, "id": "Gaijin","start":1900,"end":1919.5},
+{lane: 0, "id": "Alia","start":1920,"end":1939.5},
+{lane: 0, "id": "Sunn","start":1940,"end":1959.5},
+{lane: 1, "id": "Chef & Sommelier","start":1960,"end":1979.5},
+{lane: 0, "id": "Soul kitchen","start":1980,"end":1999.5},
+{lane: 2, "id": "Koiton Grilli","start":2000,"end":2019.5},
+{lane: 0, "id": "Glöd","start":2020,"end":2039.5},
+{lane: 1, "id": "Motti","start":2040,"end":2059.5},
+{lane: 0, "id": "Shanghai Cowboy","start":2060,"end":2079.5},
+{lane: 0, "id": "Funky Burger","start":2080,"end":2099.5},
+{lane: 0, "id": "Nuevo","start":2100,"end":2119.5},
+{lane: 1, "id": "Spis","start":2120,"end":2139.5},
+{lane: 0, "id": "Patrona","start":2140,"end":2159.5},
+{lane: 0, "id": "Strindberg","start":2160,"end":2179.5},
+{lane: 0, "id": "Namu","start":2180,"end":2199.5},
+{lane: 0, "id": "Hoshitos","start":2200,"end":2219.5},
+{lane: 2, "id": "Kunigatar Saba","start":2220,"end":2239.5},
+{lane: 0, "id": "Sipuli","start":2240,"end":2259.5},
+{lane: 0, "id": "Meche","start":2260,"end":2279.5},
+{lane: 1, "id": "Kolo","start":2280,"end":2299.5},
+{lane: 2, "id": "Flada","start":2300,"end":2319.5},
+{lane: 0, "id": "Il Bucatino","start":2320,"end":2339.5},
+{lane: 0, "id": "Kitchen & Co","start":2340,"end":2359.5},
+{lane: 0, "id": "Paksu","start":2360,"end":2379.5},
+{lane: 0, "id": "hard rock cafe","start":2380,"end":2399.5},
+{lane: 0, "id": "Nokka","start":2400,"end":2419.5},
+{lane: 1, "id": "Ask","start":2420,"end":2439.5},
+{lane: 0, "id": "PureBistro","start":2440,"end":2459.5},
+{lane: 0, "id": "putte’s pizza","start":2460,"end":2479.5},
+{lane: 2, "id": "Glogatan 4","start":2480,"end":2499.5},
+{lane: 0, "id": "Boulevard social","start":2500,"end":2519.5},
+{lane: 0, "id": "Krog Madame","start":2520,"end":2539.5},
+{lane: 0, "id": "Chez Dominique","start":2540,"end":2559.5},
+{lane: 1, "id": "Hoku","start":2560,"end":2579.5},
+{lane: 0, "id": "Bistro O'Mat","start":2580,"end":2599.5},
+{lane: 0, "id": "Helsinki Bruggeri","start":2600,"end":2619.5},
+{lane: 0, "id": "Kannas","start":2620,"end":2639.5},
+{lane: 2, "id": "Toca","start":2640,"end":2659.5},
+{lane: 0, "id": "tres bones","start":2660,"end":2679.5},
+{lane: 1, "id": "Roslund","start":2680,"end":2699.5},
+{lane: 2, "id": "Tony's deli","start":2700,"end":2719.5},
+{lane: 0, "id": "Aada","start":2720,"end":2739.5},
+{lane: 0, "id": "Pastis","start":2740,"end":2759.5},
+{lane: 0, "id": "Lusikka","start":2760,"end":2779.5},
+{lane: 0, "id": "Un Cerdo Ciego - Sokea Possu","start":2780,"end":2799.5},
+{lane: 0, "id": "Brasserie Eira","start":2800,"end":2819.5},
+{lane: 0, "id": "Trattoria Sogno","start":2820,"end":2839.5},
+{lane: 0, "id": "Kylä","start":2840,"end":2859.5},
+{lane: 0, "id": "Sandro","start":2860,"end":2879.5},
+{lane: 1, "id": "Emo","start":2880,"end":2899.5},
+{lane: 2, "id": "Bronda","start":2900,"end":2919.5},
+{lane: 0, "id": "Rafla","start":2920,"end":2939.5},
+{lane: 1, "id": "Lähiö","start":2940,"end":2959.5},
+{lane: 0, "id": "Kolmon3n","start":2960,"end":2979.5},
+{lane: 0, "id": "Savoy","start":2980,"end":2999.5},
+{lane: 0, "id": "Pastor","start":3000,"end":3019.5},
+{lane: 0, "id": "Ragu","start":3020,"end":3039.5},
+{lane: 2, "id": "Pompiers","start":3040,"end":3059.5},
+{lane: 0, "id": "Woolshed","start":3060,"end":3079.5}
+
+
+
+
+
+			
+			]
+			timeBegin = 0,
+			timeEnd = 3200;
+		</script>
+		<script type="text/javascript">
+		var m = [20, 15, 15, 120], //top right bottom left
+			w = 960 - m[1] - m[3],
+			h = 500 - m[0] - m[2],
+			miniHeight = laneLength * 12 + 50,
+			mainHeight = h - miniHeight - 50;
+
+		//scales
+		var x = d3.scale.linear()
+				.domain([timeBegin, timeEnd])
+				.range([0, w]);
+		var x1 = d3.scale.linear()
+				.range([0, w]);
+		var y1 = d3.scale.linear()
+				.domain([0, laneLength])
+				.range([0, mainHeight]);
+		var y2 = d3.scale.linear()
+				.domain([0, laneLength])
+				.range([0, miniHeight]);
+
+		var chart = d3.select("body")
+					.append("svg")
+					.attr("width", w + m[1] + m[3])
+					.attr("height", h + m[0] + m[2])
+					.attr("class", "chart");
+		
+		chart.append("defs").append("clipPath")
+			.attr("id", "clip")
+			.append("rect")
+			.attr("width", w)
+			.attr("height", mainHeight);
+
+		var main = chart.append("g")
+					.attr("transform", "translate(" + m[3] + "," + m[0] + ")")
+					.attr("width", w)
+					.attr("height", mainHeight)
+					.attr("class", "main");
+
+		var mini = chart.append("g")
+					.attr("transform", "translate(" + m[3] + "," + (mainHeight + m[0]) + ")")
+					.attr("width", w)
+					.attr("height", miniHeight)
+					.attr("class", "mini");
+		
+		//main lanes and texts
+		main.append("g").selectAll(".laneLines")
+			.data(items)
+			.enter().append("line")
+			.attr("x1", m[1])
+			.attr("y1", function(d) {return y1(d.lane);})
+			.attr("x2", w)
+			.attr("y2", function(d) {return y1(d.lane);})
+			.attr("stroke", "lightgray")
+
+		main.append("g").selectAll(".laneText")
+			.data(lanes)
+			.enter().append("text")
+			.text(function(d) {return d;})
+			.attr("x", -m[1])
+			.attr("y", function(d, i) {return y1(i + .5);})
+			.attr("dy", ".5ex")
+			.attr("text-anchor", "end")
+			.attr("class", "laneText");
+		
+		//mini lanes and texts
+		mini.append("g").selectAll(".laneLines")
+			.data(items)
+			.enter().append("line")
+			.attr("x1", m[1])
+			.attr("y1", function(d) {return y2(d.lane);})
+			.attr("x2", w)
+			.attr("y2", function(d) {return y2(d.lane);})
+			.attr("stroke", "lightgray");
+
+		mini.append("g").selectAll(".laneText")
+			.data(lanes)
+			.enter().append("text")
+			.text(function(d) {return d;})
+			.attr("x", -m[1])
+			.attr("y", function(d, i) {return y2(i + .5);})
+			.attr("dy", ".5ex")
+			.attr("text-anchor", "end")
+			.attr("class", "laneText");
+
+		var itemRects = main.append("g")
+							.attr("clip-path", "url(#clip)");
+		
+		//mini item rects
+		mini.append("g").selectAll("miniItems")
+			.data(items)
+			.enter().append("rect")
+			.attr("class", function(d) {return "miniItem" + d.lane;})
+			.attr("x", function(d) {return x(d.start);})
+			.attr("y", function(d) {return y2(d.lane + .5) - 5;})
+			.attr("width", function(d) {return x(d.end - d.start);})
+			.attr("height", 10);
+
+		//mini labels
+		mini.append("g").selectAll(".miniLabels")
+			.data(items)
+			.enter().append("text")
+			.text(function(d) {return d.id;})
+			.attr("x", function(d) {return x(d.start);})
+			.attr("y", function(d) {return y2(d.lane + .5);})
+			.attr("dy", ".5ex");
+
+		//brush
+		var brush = d3.svg.brush()
+							.x(x)
+							.on("brush", display);
+
+		mini.append("g")
+			.attr("class", "x brush")
+			.call(brush)
+			.selectAll("rect")
+			.attr("y", 1)
+			.attr("height", miniHeight - 1);
+
+		display();
+		
+		function display() {
+			var rects, labels,
+				minExtent = brush.extent()[0],
+				maxExtent = brush.extent()[1],
+				visItems = items.filter(function(d) {return d.start < maxExtent && d.end > minExtent;});
+
+			mini.select(".brush")
+				.call(brush.extent([minExtent, maxExtent]));
+
+			x1.domain([minExtent, maxExtent]);
+
+			//update main item rects
+			rects = itemRects.selectAll("rect")
+			        .data(visItems, function(d) { return d.id; })
+				.attr("x", function(d) {return x1(d.start);})
+				.attr("width", function(d) {return x1(d.end) - x1(d.start);});
+			
+			rects.enter().append("rect")
+				.attr("class", function(d) {return "miniItem" + d.lane;})
+				.attr("x", function(d) {return x1(d.start);})
+				.attr("y", function(d) {return y1(d.lane) + 10;})
+				.attr("width", function(d) {return x1(d.end) - x1(d.start);})
+				.attr("height", function(d) {return .8 * y1(1);});
+
+			rects.exit().remove();
+
+			//update the item labels
+			labels = itemRects.selectAll("text")
+				.data(visItems, function (d) { return d.id; })
+				.attr("x", function(d) {return x1(Math.max(d.start, minExtent) + 2);});
+
+			labels.enter().append("text")
+				.text(function(d) {return d.id;})
+				.attr("x", function(d) {return x1(Math.max(d.start, minExtent));})
+				.attr("y", function(d) {return y1(d.lane + .5);})
+				.attr("text-anchor", "start");
+
+			labels.exit().remove();
+
+		}
+		
+		</script>
+	</body>
+</html>
